@@ -113,4 +113,4 @@ def edit(request):
     # if the method is get, redirect user to main page 
     return HttpResponseRedirect(reverse("index"), {
         "result": "index"
-    })
+    }) 
