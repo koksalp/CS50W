@@ -1,7 +1,7 @@
 # BRINGMYFOOD  
 This is the final project that I have made for CS50's Web Programming with Python and Javascript.  
 
-See the project in action [here](https://www.youtube.com/watch?v=upDkRRhVe5E)  
+Click [here](https://www.youtube.com/watch?v=upDkRRhVe5E) to see it in action. 
 ## What it is about 
 
 Since the most famous apps from leading tech companies have been recreated on each problem set throughout the course, a popular service from a sector that has increased its importance for the last decade and includes many successful apps worldwide has been chosen as a subject of the final project and that is why a food delivery app has been implemented. Users can login as either customer or restaurant owner. Users that do not own a restaurant (customers) can select a restaurant listed in the homepage and order any product that the restaurant offers. Restaurant owners, on the other hand, can also do anything that a customer can do because they are also customers. Other than that, they are allowed to open restaurants and they can manage them all they want. 
