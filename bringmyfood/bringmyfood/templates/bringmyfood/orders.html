@@ -1,0 +1,45 @@
+{% extends "bringmyfood/layout.html" %}
+{% block title %}My Orders{% endblock %}
+{% block body %} 
+    <div id="order-text-div">
+        <h1>My Orders</h1>
+        <p id="no-orders"></p>
+    </div>
+    {% for order in orders %}     
+        <div class="default-div order-div"> 
+            <p><b>Order total:</b> ${{ order.total|floatformat:2 }}</p>
+            <input type="hidden" value="{{ order.restaurant.pk }}"> 
+            <p><b>Order id:</b> <span class="order_id">{{ order.pk }}</span> </p>
+            <p><b>Customer:</b> <a id="profile" href="{% url 'profile' order.customer.person.pk %}">{{ order.customer.person.username }}</a></p> 
+            <p><b>Restaurant:</b> <a href="{% url 'restaurant' order.restaurant.pk %}">{{ order.restaurant.name }}</a></p>  
+            <p><b>Order created at:</b> {{ order.created_at }}</p> 
+            <p><b>Order status: </b> {% if order.is_active %}Active{% else %}Not Active{% endif %}</p> 
+            <p><b>Products: </b> 
+                {% if not order.products.all %}
+                    No products.
+                {% else %}
+                    <ul>
+                        {% for product in order.products.all %} 
+                            <li>
+                                Name: <a href="{% url 'product' product.pk %}">{{ product.name }}</a> Price: ${{ product.price|floatformat:2 }} 
+                                {% for amount in amounts %}
+                                    {% if amount.product.pk == product.pk and amount.order.pk == order.pk %}
+                                        Amount: {{ amount.amount }}
+                                    {% endif %}
+                                {% endfor %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </p>  
+            {% if order.is_active %}
+                <button type="button" class="btn btn-danger cancel-customer">Cancel</button>
+            {% endif %}
+        
+        </div> 
+    {% empty %}
+        <p id="order-empty">There are no orders yet.</p>
+    {% endfor %} 
+    <script src="/static/bringmyfood/orders.js"></script>
+{% endblock %} 
+    

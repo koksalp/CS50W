@@ -1,0 +1,47 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Bringmyfood{% endblock %}</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'bringmyfood/styles.css' %}" rel="stylesheet">
+    </head>
+    <body>
+        <ul id="ul-links">
+            <li>
+                <a id="home" href="{% url 'index' %}">Home</a>
+            </li>  
+            {% if user.is_authenticated %} 
+                {% if user.is_owner %} 
+                    <li> 
+                        <a id="manage" href="{% url 'owner_manage' user.id %}">Manage</a>
+                    </li>
+                {% endif %}
+                <li> 
+                    <a id="my-orders" href="{% url 'orders' user.id %}">My Orders</a>
+                </li>
+                <li>  
+                    <a id="profile" href="{% url 'profile' user.id %}">{{ user.username }}</a>
+                </li> 
+                <li class="link-right"> 
+                    <a href="{% url 'logout' %}">Log Out</a> 
+                </li>
+
+            {% else %}
+                <li> 
+                    <a id="login" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li> 
+                    <a id="register" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+        </ul> 
+        <br> 
+        {% block body %}
+        {% endblock %} 
+    <script src="/static/bringmyfood/layout.js"></script>
+    </body>
+</html>
+ 
