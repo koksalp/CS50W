@@ -1,0 +1,51 @@
+{% extends "bringmyfood/layout.html" %}
+
+{% block body %} 
+    <div id="index-container">
+        {% if restaurants.count != 0 or restaurants.count == 0 and selected != "all" %}
+            <form action="{% url 'index' %}" method="post" id="sort">
+                {% csrf_token %}
+                <select name="sort" onchange="this.form.submit();">  
+                    {% for each in options %} 
+                        {% if each == selected %} 
+                            <option value="{{ each }}" selected>{{ each|title }}</option> 
+                        {% else %}
+                            <option value="{{ each }}">{{ each|title }}</option>  
+                        {% endif %}
+                    {% endfor %} 
+                </select>
+            </form>
+        {% endif %}
+        {% for restaurant in restaurants %}   
+            <div id="index-div" class=
+                "
+                {% if user.is_authenticated %}
+                    {% if user.pk == restaurant.owner.person.pk %}
+                        rest-owner
+                    {% else %}
+                        {% if restaurant.is_open %}
+                            rest-open
+                        {% else %}
+                            rest-close
+                        {% endif %}
+                    {% endif %} 
+                {% else %}
+                    {% if restaurant.is_open %}
+                        rest-open
+                    {% else %}
+                        rest-close
+                    {% endif %}
+                {% endif %}     
+                " 
+            > 
+                <p><b>Restaurant Name: </b> <a href="{% url 'restaurant' restaurant.id %}">{{ restaurant.name }}</a></p>  
+                <p><b>Restaurant Address: </b> {{ restaurant.address }}</p>  
+                <p><b>Phone Number: </b> {{ restaurant.phone_number }}</p>  
+                <p><b>Restaurant Category: </b> {{ restaurant.category }}</p>  
+                <p><b>Restaurant Status: </b> {% if restaurant.is_open %}Open{% else %}Closed{% endif %}</p>   
+            </div>  
+        {% empty %} 
+            <p>No restaurants.</p> 
+        {% endfor %}   
+    </div>   
+{% endblock %}      
